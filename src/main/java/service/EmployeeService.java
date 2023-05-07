@@ -1,14 +1,13 @@
-package departments;
+package service;
 
 import model.Employee;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Comparator;
+import java.util.List;
 import java.util.stream.Collectors;
+
 
 @Service
 public class EmployeeService {
@@ -25,16 +24,19 @@ public class EmployeeService {
     }
 
     public Employee getMaxPaidByDept(int dept) {
-        return (Employee) Arrays.stream(staff); Employee > Stream >
+        return Arrays.stream(staff)
+        .filter(e -> e != null)
     .filter(e -> e.getDept() == dept)
-                .max(Comparator.comparingDouble(Employee::getSalary))Optional<Employee>
-        .orgElseThrow(() -> new IllegalArgumentException("Department number is invalid"));
+                .max(Comparator.comparingDouble(Employee::getSalary))
+        .orElseThrow(() -> new IllegalArgumentException("Department number is invalid"));
     }
+
     public Employee getMinPaidByDept(int dept) {
-        return (Employee) Arrays.stream(staff) Employee > Stream >
-    .filter(e -> e.getDept() == dept)
-                .min(Comparator.comparingDouble(Employee::getSalary))Optional<Employee>
-        .orgElseThrow(() -> new IllegalArgumentException("Department number is invalid"));
+        return Arrays.stream(staff)
+                .filter(e -> e != null)
+                .filter(e -> e.getDept() == dept)
+                .min(Comparator.comparingDouble(Employee::getSalary))
+                .orElseThrow(() -> new IllegalArgumentException("Department number is invalid"));
     }
     public List<Employee> showAll() {
         return Arrays.stream(staff)
@@ -47,5 +49,12 @@ public class EmployeeService {
                 .filter(e -> e != null)
                 .filter(e -> e.getDept() == id)
                 .collect(Collectors.toList());
+    }
+
+    public Employee getMinPaidByDept(Integer id) {
+        return null;
+    }
+    public Employee getMaxPaidByDept(Integer id)  {
+        return null;
     }
 }
